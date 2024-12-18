@@ -13,4 +13,4 @@ This project requires the following datasets:
 
 1. **npi.gz**: [Download here](http://download.cms.gov/nppes/NPI_Files.html)
 
-2. **uszips.csv**: [Download here](https://simplemaps.com/data/us-zips))
+2. **uszips.csv**: [Download here](https://simplemaps.com/data/us-zips)
