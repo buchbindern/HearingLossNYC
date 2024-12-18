@@ -1,0 +1,37 @@
+#!/usr/bin/env awk -f
+
+BEGIN {
+    FS = "|"
+    inpath = "~/project/npi.gz"
+    incommand = "zcat " inpath
+    
+
+    while ((getline zip < "NYCzips.txt") > 0) {
+	gsub(/"/, "", zip)
+        nycZips[zip] = 1
+    }
+
+    while ((getline zip < "NYSzips.txt") > 0) {
+	gsub(/"/, "", zip)
+        nysZips[zip] = 1
+    }
+ 
+    while((incommand | getline) > 0){
+	if($48 ~ /^(231H00000X|231HA2400X|231HA2500X|237600000X|237700000X|235500000X|2355A2700X|207YX0901X)$/) {
+	    zipC = substr($25, 0, 5)
+	    if (zipC in nycZips) {
+		nycCounts[zipC]++
+	    } else if (zipC in nysZips) {
+		#print("here")
+		nysCounts[zipC]++
+	    }
+	}
+    }
+
+    for (zip in nycCounts) {
+        print zip, nycCounts[zip] > "earDocsNYC.txt"
+    }
+    for (zip in nysCounts) {
+        print zip, nysCounts[zip] > "earDocsNYS.txt"
+    }
+}
